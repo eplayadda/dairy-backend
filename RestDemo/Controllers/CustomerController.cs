@@ -14,14 +14,17 @@ namespace RestDemo.Controllers
    
     public class CustomerController : ApiController
     {
+       
         string mCollectionName = "customer_info";
-        string mDBName = DairyConstant._dbName;//"learnsmart";
+        string mDBName =  DairyConstant._dbName;//"learnsmart";
         [HttpGet]
         public object getAllCustomer()
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<CustomerInfo>(mCollectionName).Find(new BsonDocument()).ToList();
                 Customer allCustomer = new Customer();
@@ -39,7 +42,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<CustomerInfo>(mCollectionName);
                 var plant = collection.Find(Builders<CustomerInfo>.Filter.Where(s => s.farm_id == customerByFramID.farm_id
@@ -63,7 +67,8 @@ namespace RestDemo.Controllers
                 #region InsertDetails  
                 if (string.IsNullOrEmpty(customerInfo.Id ))
                 {
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<CustomerInfo>(mCollectionName);
                     customerInfo.rank = CreateCustomerIndex(customerInfo.farm_id);
@@ -80,7 +85,8 @@ namespace RestDemo.Controllers
                 #region updateDetails  
                 else
                 {
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<CustomerInfo>(mCollectionName);
                     var update = collection.FindOneAndUpdateAsync(Builders<CustomerInfo>.Filter.Eq("Id", customerInfo.Id), Builders<CustomerInfo>.
@@ -104,7 +110,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<CustomerInfo>(mCollectionName);
                 var plant = collection.Find(Builders<CustomerInfo>.Filter.Where(s => s.farm_id == pFarmID)).ToList();

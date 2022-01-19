@@ -23,7 +23,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<Farm>(mCollectionName);
                 var plant = collection.Find(Builders<Farm>.Filter.Where(s => s.mob_number == pMobileIfno.mob_number)).ToList();
@@ -82,7 +83,8 @@ namespace RestDemo.Controllers
         [HttpPost]
         public object createPassword(Farm farm)
         {
-            var client = new MongoClient("mongodb://localhost/:27017");
+            var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+            var client = new MongoClient(settings);
             var database = client.GetDatabase(mDBName);
             var collection = database.GetCollection<Farm>(mCollectionName);
             var data = database.GetCollection<Farm>(mCollectionName);

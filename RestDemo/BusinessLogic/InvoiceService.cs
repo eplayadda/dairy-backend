@@ -31,7 +31,8 @@ namespace RestDemo.BusinessLogic
         }
         void NewInvoiceEntry(Invoice invoice)
         {
-            var client = new MongoClient("mongodb://localhost/:27017");
+            var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+            var client = new MongoClient(settings);
             var database = client.GetDatabase(mDBName);
             var collection = database.GetCollection<Invoice>("invoice");
             var plant = collection.Find(Builders<Invoice>.Filter.Where(s => s.farm_id == invoice.farm_id
@@ -71,7 +72,8 @@ namespace RestDemo.BusinessLogic
         }
         void UpdateInvoice(Invoice invoice)
         {
-            var client = new MongoClient("mongodb://localhost/:27017");
+            var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+            var client = new MongoClient(settings);
             var database = client.GetDatabase(mDBName);
             var collection = database.GetCollection<Invoice>("invoice");
             var update = collection.FindOneAndUpdateAsync(Builders<Invoice>.Filter.Eq("Id", invoice.Id), Builders<Invoice>.
@@ -88,7 +90,8 @@ namespace RestDemo.BusinessLogic
                 if (string.IsNullOrEmpty(invoiceRequestBody.customer_id))
                 {
                     // This is for all customer for same farm and month and year
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<Invoice>(mCollectionName);
                     var plant = collection.Find(Builders<Invoice>.Filter.Where(s => s.farm_id == invoiceRequestBody.farm_id
@@ -101,7 +104,8 @@ namespace RestDemo.BusinessLogic
                 else
                 {
                     // this is use for particular customer for same farm and month and year
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<Invoice>(mCollectionName);
                     var plant = collection.Find(Builders<Invoice>.Filter.Where(s => s.customer_id == invoiceRequestBody.customer_id
@@ -124,7 +128,8 @@ namespace RestDemo.BusinessLogic
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 List<string> framCustomer = GetCustomerIDInMyFram(invoiceByFramID.farm_id);
                 var collection = database.GetCollection<Invoice>(mCollectionName);
@@ -152,7 +157,8 @@ namespace RestDemo.BusinessLogic
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<Invoice>("invoice");
 
@@ -172,7 +178,8 @@ namespace RestDemo.BusinessLogic
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
 
                 var collection = database.GetCollection<Invoice>(mCollectionName);
@@ -199,7 +206,8 @@ namespace RestDemo.BusinessLogic
         {
             try
             {
-                var client_inv = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client_inv = new MongoClient(settings);
                 var database_inv = client_inv.GetDatabase(mDBName);
                 var collection_inv = database_inv.GetCollection<Invoice>(mCollectionName);
                 var plant_inv = collection_inv.Find(Builders<Invoice>.Filter.Where(s => s.farm_id == invoiceRequestBody.farm_id)).ToList();
@@ -222,7 +230,7 @@ namespace RestDemo.BusinessLogic
                 orderRequestBody.month = invoiceRequestBody.inv_for_month;
                 orderRequestBody.year = invoiceRequestBody.inv_for_year;
                 orderRequestBody.farmID = invoiceRequestBody.farm_id;
-                var client1 = new MongoClient("mongodb://localhost/:27017");
+                var client1 = new MongoClient(settings);
                 var database1 = client1.GetDatabase(mDBName);
                 var collection1 = database1.GetCollection<Order_info>("order_info");
                 var plant1 = collection1.Find(Builders<Order_info>.Filter.Where(s => s.farmID == orderRequestBody.farmID
@@ -263,7 +271,8 @@ namespace RestDemo.BusinessLogic
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<Invoice>(mCollectionName);
                 var plant = collection.Find(Builders<Invoice>.Filter.Where(s => s.customer_id == pPrevInvoiceByCustomey.customerID
@@ -295,7 +304,8 @@ namespace RestDemo.BusinessLogic
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<Invoice>(mCollectionName);
                 var plant = collection.Find(Builders<Invoice>.Filter.Where(s => s.customer_id == pPrevInvoiceByCustomey.customerID
@@ -326,7 +336,8 @@ namespace RestDemo.BusinessLogic
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<CustomerInfo>("customer_info");
                 var plant = collection.Find(Builders<CustomerInfo>.Filter.Where(s => s.farm_id == pFramID && s.c_delete == false)).ToList();
@@ -344,7 +355,8 @@ namespace RestDemo.BusinessLogic
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<CustomerInfo>("customer_info");
                 var plant = collection.Find(Builders<CustomerInfo>.Filter.Where(s => s.Id == id)).First();

@@ -18,7 +18,8 @@ namespace RestDemo.Controllers
         {
             if (string.IsNullOrEmpty(pDairyProfile.Id))
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<DairyProfile>(mCollectionName);
                 collection.InsertOne(pDairyProfile);
@@ -26,7 +27,8 @@ namespace RestDemo.Controllers
             }
             else
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<DairyProfile>(mCollectionName);
                 var update = collection.FindOneAndUpdateAsync(Builders<DairyProfile>.Filter.Eq("Id",pDairyProfile.Id), Builders<DairyProfile>.
@@ -42,7 +44,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<DairyProfile>(mCollectionName);
                 var plant = collection.Find(Builders<DairyProfile>.Filter.Where(s => s.farm_id == pDairyByFramID.farm_id)).FirstOrDefault();

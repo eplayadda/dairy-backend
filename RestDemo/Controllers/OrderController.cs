@@ -19,7 +19,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<Order_info>(mCollectionName).Find(new BsonDocument()).ToList();
                 Order allOrder = new Order();
@@ -37,7 +38,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<Order_info>(mCollectionName);
                 var plant = collection.Find(Builders<Order_info>.Filter.Where(s => s.Id == orderByOrderID.order_id)).FirstOrDefault();
@@ -58,7 +60,8 @@ namespace RestDemo.Controllers
                 #region InsertDetails  
                 if (string.IsNullOrEmpty(order_Info.Id))
                 {
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<Order_info>(mCollectionName);
                     collection.InsertOne(order_Info);
@@ -69,7 +72,8 @@ namespace RestDemo.Controllers
                 #region updateDetails  
                 else
                 {
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<Order_info>(mCollectionName);
                     var update = collection.FindOneAndUpdateAsync(Builders<Order_info>.Filter.Eq("Id", order_Info.Id), Builders<Order_info>.
@@ -93,7 +97,8 @@ namespace RestDemo.Controllers
                 if (orderRequestBody.customerID.Equals(""))
                 {
                     // This is for all customer for same farm and month and year
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<Order_info>(mCollectionName);
                     var plant = collection.Find(Builders<Order_info>.Filter.Where(s => s.farmID == orderRequestBody.farmID
@@ -107,7 +112,8 @@ namespace RestDemo.Controllers
                 else
                 {
                     // this is use for particular customer for same farm and month and year
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<Order_info>(mCollectionName);
                     var plant = collection.Find(Builders<Order_info>.Filter.Where(s => s.o_customer_id == orderRequestBody.customerID
@@ -132,7 +138,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<Order_info>(mCollectionName);
                 var plant = collection.Find(Builders<Order_info>.Filter.Where(s => s.o_customer_id == orderRequestBody.customerID
@@ -168,7 +175,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<Order_info>(mCollectionName);
                 var plant = collection.Find(Builders<Order_info>.Filter.Where(s => s.o_customer_id == orderRequestBody.customerID
@@ -203,7 +211,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<Order_info>(mCollectionName);
                 var plant = collection.Find(Builders<Order_info>.Filter.Where(s => s.farmID == orderRequestBody.farmID

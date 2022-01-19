@@ -19,7 +19,8 @@ namespace RestDemo.Controllers
         {
             try
             {
-                var client = new MongoClient("mongodb://localhost/:27017");
+                var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                var client = new MongoClient(settings);
                 var database = client.GetDatabase(mDBName);
                 var collection = database.GetCollection<DairyShop>(mCollectionName).Find(new BsonDocument()).ToList();
                 AllProducts allProducts = new AllProducts();
@@ -41,7 +42,8 @@ namespace RestDemo.Controllers
                 #region InsertDetails  
                 if (string.IsNullOrEmpty(pDairyShop.Id))
                 {
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<DairyShop>(mCollectionName);
                     collection.InsertOne(pDairyShop);
@@ -52,7 +54,8 @@ namespace RestDemo.Controllers
                 #region updateDetails  
                 else
                 {
-                    var client = new MongoClient("mongodb://localhost/:27017");
+                    var settings = MongoClientSettings.FromConnectionString(DairyConstant._cunnectionString);
+                    var client = new MongoClient(settings);
                     var database = client.GetDatabase(mDBName);
                     var collection = database.GetCollection<DairyShop>(mCollectionName);
                     var update = collection.FindOneAndUpdateAsync(Builders<DairyShop>.Filter.Eq("Id", pDairyShop.Id), Builders<DairyShop>.
